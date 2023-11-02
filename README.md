@@ -4,7 +4,7 @@
 ![release](https://img.shields.io/github/v/release/cktf/terraform-module-script?display_name=tag)
 ![license](https://img.shields.io/github/license/cktf/terraform-module-script)
 
-**Script** is a Terraform module useful for running **create** and **destroy** scripts on **remote machines**
+**Script** is a Terraform module useful for running **Create** and **Destroy** scripts on **Remote Machines**
 
 ## Installation
 
