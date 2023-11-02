@@ -1,10 +1,10 @@
-# Terraform Module RKE
+# Terraform Module Script
 
-![pipeline](https://github.com/cktf/terraform-module-rke/actions/workflows/cicd.yml/badge.svg)
-![release](https://img.shields.io/github/v/release/cktf/terraform-module-rke?display_name=tag)
-![license](https://img.shields.io/github/license/cktf/terraform-module-rke)
+![pipeline](https://github.com/cktf/terraform-module-script/actions/workflows/cicd.yml/badge.svg)
+![release](https://img.shields.io/github/v/release/cktf/terraform-module-script?display_name=tag)
+![license](https://img.shields.io/github/license/cktf/terraform-module-script)
 
-**RKE** is a Terraform module useful for bootstraping **HA** kubernetes clusters using **k3s** and **rke2** on **Remote Machines**
+**Script** is a Terraform module useful for running **create** and **destroy** scripts on **remote machines**
 
 ## Installation
 
@@ -17,41 +17,23 @@ terraform init
 ## Usage
 
 ```hcl
-module "rke" {
-  source = "cktf/rke/module"
+module "script" {
+  source = "cktf/script/module"
 
-  masters = {
-    1 = {
-      connection = {
-        type     = "ssh"
-        host     = "192.168.172.185"
-        port     = 22
-        user     = "ubuntu"
-        password = "ubuntu"
-      }
-    }
+  connection = {
+    type     = "ssh"
+    host     = "192.168.100.100"
+    port     = 22
+    user     = "root"
+    password = "pass"
   }
 
-  nodes = {
-    1 = {
-      connection = {
-        type     = "ssh"
-        host     = "192.168.172.186"
-        port     = 22
-        user     = "ubuntu"
-        password = "ubuntu"
-      }
-    }
-    2 = {
-      connection = {
-        type     = "ssh"
-        host     = "192.168.172.186"
-        port     = 22
-        user     = "ubuntu"
-        password = "ubuntu"
-      }
-    }
-  }
+  create  = <<-EOF
+    apt install -y docker.io
+  EOF
+  destroy = <<-EOF
+    apt remove -y docker.io
+  EOF
 }
 ```
 
