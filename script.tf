@@ -34,6 +34,7 @@ resource "null_resource" "this" {
   provisioner "remote-exec" {
     when = create
     inline = [
+      "export DEBIAN_FRONTEND=noninteractive",
       "echo '${try(jsondecode(self.triggers.connection).password, "")}' | sudo -S -v",
       "echo ${base64encode(self.triggers.create)} | base64 -d | sudo sh"
     ]
@@ -42,6 +43,7 @@ resource "null_resource" "this" {
   provisioner "remote-exec" {
     when = destroy
     inline = [
+      "export DEBIAN_FRONTEND=noninteractive",
       "echo '${try(jsondecode(self.triggers.connection).password, "")}' | sudo -S -v",
       "echo ${base64encode(self.triggers.destroy)} | base64 -d | sudo sh"
     ]
