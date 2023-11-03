@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/cktf/terraform-module-script/compare/1.0.0...1.0.1) (2023-11-03)
+
+
+### Bug Fixes
+
+* add DEBIAN noninteractive ([27763b3](https://github.com/cktf/terraform-module-script/commit/27763b3726b5cdb40a2c7461f0e7ae5b82bed5b1))
+
 # 1.0.0 (2023-11-02)
 
 
