@@ -1,5 +1,5 @@
-resource "null_resource" "this" {
-  triggers = {
+resource "terraform_data" "this" {
+  triggers_replace = {
     connection = jsonencode(var.connection)
     create     = var.create
     destroy    = var.destroy
