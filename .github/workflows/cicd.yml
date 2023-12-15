@@ -14,11 +14,6 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
-              with:
-                  fetch-depth: 0
-            - uses: actions/setup-node@v2
-              with:
-                  node-version: "17"
             - uses: hashicorp/setup-terraform@v1
               with:
                   terraform_version: "1.6.5"
@@ -26,15 +21,10 @@ jobs:
               with:
                   path: .terraform/
                   key: ${{ hashFiles('.terraform.lock.hcl') }}
-            - uses: actions/cache@v2
-              with:
-                  path: build/
-                  key: ${{ github.sha }}
 
             - run: terraform init
             - run: terraform fmt -check
             - run: terraform validate -no-color
-            - run: mkdir -p build && cp -R .terraform.lock.hcl *.tf build
 
     test:
         needs: build
@@ -42,7 +32,7 @@ jobs:
         steps:
             - uses: actions/checkout@v3
 
-            - run: echo CodeCoverage
+            - run: echo Test
 
     release:
         needs: test
@@ -50,10 +40,6 @@ jobs:
         if: github.event_name == 'push'
         steps:
             - uses: actions/checkout@v3
-            - uses: actions/cache@v2
-              with:
-                  path: build/
-                  key: ${{ github.sha }}
 
             - run: npm i -g semantic-release @semantic-release/changelog @semantic-release/github @semantic-release/git
             - run: cat .github/.releaserc.yml | envsubst > .releaserc.yml && semantic-release
